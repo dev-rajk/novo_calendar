@@ -30,15 +30,15 @@ with st.form(key='event_form'):
         registration_link = st.text_input(" Registration Link")
         other_details = st.text_area("Other Details")
         
-        submit_button = st.form_submit_button(label='Submit Event')
+        submit_button = st.form_submit_button(label='Add Event')
         
         if submit_button:
             if not Title or not Contact or not Location or not Date or not Category or not Time:
                 st.error("Please fill all the fields marked with a *")
             else:
                 add_event(Title, Date, Time, Category, Venue, Location, Organizer, Genre, Quiz_Master, Prize, Contact, registration_link, other_details)
-                st.success(f"Event '{Title}' submitted successfully! Awaiting admin approval.")
-            
+                st.success(f"Event '{Title}' added successfully!")
+                # st.success(f"Event '{Title}' submitted successfully! Awaiting admin approval.")
 
 st.markdown('''
                 :red[ **This website is free of cost for all users.** ] \n
