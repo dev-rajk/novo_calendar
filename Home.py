@@ -14,30 +14,26 @@ st.set_page_config(
         
         '''}
     )
-# st.page_link("Home.py", label="Home", icon=":material/lightbulb:")
-# st.page_link("pages/admin_page.py", label="Submit Events", icon=":material/lightbulb:")
-# st.page_link("pages/submit_page.py", label="Manage Events", icon=":material/lightbulb:")
 
 
+# # Check if 'has_visited_homepage' exists in session_state
+# if 'has_visited_homepage' not in st.session_state:
+#         # If not, this is the user's first time visiting the homepage in this session
+#         st.session_state.has_visited_homepage = False
 
-# Check if 'has_visited_homepage' exists in session_state
-if 'has_visited_homepage' not in st.session_state:
-        # If not, this is the user's first time visiting the homepage in this session
-        st.session_state.has_visited_homepage = False
+#     # If this is the first time loading the homepage, update the visitor count
+# if not st.session_state.has_visited_homepage:
+#         # Get the current visitor count from Firestore
+#         count = get_vc()
 
-    # If this is the first time loading the homepage, update the visitor count
-if not st.session_state.has_visited_homepage:
-        # Get the current visitor count from Firestore
-        count = get_vc()
+#         # Increment the visitor count
+#         count += 1
 
-        # Increment the visitor count
-        count += 1
+#         # Update the visitor count in Firestore
+#         update_vc(count)
 
-        # Update the visitor count in Firestore
-        update_vc(count)
-
-        # Set the flag in session_state to prevent further updates during the session
-        st.session_state.has_visited_homepage = True
+#         # Set the flag in session_state to prevent further updates during the session
+#         st.session_state.has_visited_homepage = True
 
 st.title("Assam Quiz Calendar :calendar: ")
 st.write('Select in sidebar to view quizzes or submit events')
@@ -287,6 +283,6 @@ else:
                 :green[**Cheers to quizzing.** ] :partying_face::partying_face:\n
                   ''')
 
-# Display the current visitor count
-current_count = get_vc()  # Get the latest count from Firestore
-st.write(f"Number of visitors: {current_count}")
+# # Display the current visitor count
+# current_count = get_vc()  # Get the latest count from Firestore
+# st.write(f"Number of visitors: {current_count}")
