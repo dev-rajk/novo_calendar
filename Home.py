@@ -219,6 +219,7 @@ def fullcalendar(events, theme_mode):
     return calendar_code
 
 
+
 def link_string(link_str):
     if link_str.startswith('http'):
         return str(f'{link_str }')
