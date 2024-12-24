@@ -94,8 +94,8 @@ def fullcalendar(events, theme_mode):
             /* The Modal (background) */
             .modal {{
                 display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 1; /* Sit on top */
+                position: fixed; /* Fixed to viewport */
+                z-index: 9999; /* High z-index value to ensure it sits on top */
                 left: 0;
                 top: 0;
                 width: 100%; /* Full width */
@@ -131,6 +131,12 @@ def fullcalendar(events, theme_mode):
 
             /* Dynamic Style based on theme */
             {selected_style}
+
+            /* Ensure the calendar sits behind the modal */
+            #calendar {{
+                position: relative;
+                z-index: 1;  /* Lower than modal */
+            }}
         </style>
         <script>
           document.addEventListener('DOMContentLoaded', function() {{
@@ -211,6 +217,7 @@ def fullcalendar(events, theme_mode):
     </html>
     """
     return calendar_code
+
 
 def link_string(link_str):
     if link_str.startswith('http'):
