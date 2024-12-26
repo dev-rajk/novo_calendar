@@ -13,14 +13,14 @@ st.set_page_config(
 st.title("Assam Quiz Calendar :calendar: ")
 st.subheader("Submit a New Quiz Event")
     
-with st.form(key='event_form'):
+with st.form(key='event_form', clear_on_submit=True):
         st.write(''':red[Please ensure that event details are accurate] ''') 
         st.write(''':red[Fields marked with * are necessary]''')
         Title = st.text_input("Quiz Name*")
         Date = st.date_input("Date*")
         Time = st.text_input("Time*")
         Category = st.text_input("Category*")
-        Venue = st.text_input("Venue")  # Changed from place to venue
+        Venue = st.text_input("Venue")  
         Location = st.text_input("Location*")
         Organizer = st.text_input("Organizer")
         Genre = st.text_input("Genre")
