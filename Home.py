@@ -9,33 +9,25 @@ st.set_page_config(
     menu_items={
         'about': '''**This was made with love in Assam**        
         The calendar attempts to help organisers and participants know more about the quizzing events across the state. 
-        
+        A small tribute to Arindam, taken from us far too soon
         '''}
     )
 # Title of the Streamlit app
 st.title("Assam Quiz Calendar :calendar: ")
-
+st.write('''Curated by Rajibul Awal :sunglasses: and Devraj Kashyap :construction_worker:''')
 st.write("Find upcoming events or add your own events")
 
 # Fetch approved events (assuming get_events fetches a list of events)
 upcoming_events = get_events_dated(str(datetime.now().date()))
 # Convert the list of events into a DataFrame (assuming approved_events is a list of dictionaries)
 df = pd.DataFrame(upcoming_events, columns= ['quiz_name', 'date', 'time', 'category', 'venue', 'location', 'organizer', 'genre', 'quiz_master', 'prize', 'contact_number', 'registration_link', 'other_details' ])
-    
-
-
 # Convert event_date from string to datetime (in the format 'YYYY-MM-DD')
 df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='coerce')
 df['date'] = df['date'].dt.date
-
-
 # Sort the events by the 'date'
 df = df.sort_values(by='date')
-
 # Format the 'date' column to the desired format: "12 May, 2025"
 df['date'] = df['date'].apply(lambda x: x.strftime('%d %b, %Y'))
-
-
 # Reset index to remove the index column when displaying the table
 df_reset = df[['quiz_name', 'date', 'time', 'category', 'venue', 'location', 'prize', 'contact_number', 'organizer', 'genre', 'quiz_master', 'registration_link', 'other_details']].reset_index(drop=True)
 
@@ -61,7 +53,6 @@ df_reset = df_reset.rename(columns={
 st.markdown(df_reset.to_html(escape=False), unsafe_allow_html=True)
 
 st.subheader("Submit an Upcoming Quiz ")
-# clearornot = st.checkbox(label="clear on exit")
 with st.form(key='event_form', clear_on_submit=True):
         st.write(''':red[Please ensure that event details are accurate] ''') 
         st.write(''':red[Fields marked with * are necessary]''')
