@@ -39,7 +39,7 @@ def add_event(quiz_name, date, time, category, venue, location, organizer, genre
         'contact_number': contact_number,
         'registration_link': str(registration_link),
         'other_details': other_details,
-        'status': 'Approved'
+        'status': 'Pending'
     })
 
 def get_events_dated(curr_dt):
