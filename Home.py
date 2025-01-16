@@ -14,7 +14,7 @@ st.set_page_config(
     )
 # Title of the Streamlit app
 st.title("Assam Quiz Calendar :calendar: ")
-st.write('''Curated by Rajibul Awal :sunglasses: and Devraj Kashyap :construction_worker:''')
+st.write('''Curated by Rajibul Awal :sunglasses: Dipom Saha :turtle: and Devraj Kashyap :clown_face:''')
 st.write("Find upcoming events or add your own events")
 
 # Fetch approved events (assuming get_events fetches a list of events)
