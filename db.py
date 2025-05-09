@@ -42,8 +42,8 @@ def add_event(quiz_name, date, time, category, venue, location, organizer, genre
         'status': 'Pending'
     })
 
-def get_events_dated(curr_dt):
-    events_ref = db.collection("events").where("date", ">=", curr_dt)
+def get_events_dated(curr_dt, status):
+    events_ref = db.collection("events").where("date", ">=", curr_dt).where('status', 'in', status)
 
     events = events_ref.stream()
     quizzes = []
