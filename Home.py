@@ -18,7 +18,7 @@ st.write('''Curated by Rajibul Awal :sunglasses: Dipom Saha :turtle: and Devraj 
 st.write("Find upcoming events or add your own events")
 
 # Fetch approved events (assuming get_events fetches a list of events)
-upcoming_events = get_events_dated(str(datetime.now().date()))
+upcoming_events = get_events_dated(str(datetime.now().date()), ['Approved', 'Pending'])
 # Convert the list of events into a DataFrame (assuming approved_events is a list of dictionaries)
 df = pd.DataFrame(upcoming_events, columns= ['quiz_name', 'date', 'time', 'category', 'venue', 'location', 'organizer', 'genre', 'quiz_master', 'prize', 'contact_number', 'registration_link', 'other_details' ])
 # Convert event_date from string to datetime (in the format 'YYYY-MM-DD')
