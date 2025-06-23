@@ -12,28 +12,28 @@ st.set_page_config(
         A small tribute to Arindam, taken from us far too soon
         '''}
     )
-# Title of the Streamlit app
+
 st.title("Assam Quiz Calendar :calendar: ")
 st.write('''Curated by Rajibul Awal :sunglasses: Dipom Saha :turtle: and Devraj Kashyap :clown_face:''')
 st.write("Find upcoming events or add your own events")
 
-# Fetch approved events (assuming get_events fetches a list of events)
+
 upcoming_events = get_events_dated(str(datetime.now().date()), ['Approved', 'Pending'])
-# Convert the list of events into a DataFrame (assuming approved_events is a list of dictionaries)
+
 df = pd.DataFrame(upcoming_events, columns= ['quiz_name', 'date', 'time', 'category', 'venue', 'location', 'organizer', 'genre', 'quiz_master', 'prize', 'contact_number', 'registration_link', 'other_details' ])
-# Convert event_date from string to datetime (in the format 'YYYY-MM-DD')
+
 df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='coerce')
 df['date'] = df['date'].dt.date
-# Sort the events by the 'date'
+
 df = df.sort_values(by='date')
-# Format the 'date' column to the desired format: "12 May, 2025"
+
 df['date'] = df['date'].apply(lambda x: x.strftime('%d %b, %Y'))
-# Reset index to remove the index column when displaying the table
+
 df_reset = df[['quiz_name', 'date', 'time', 'category', 'venue', 'location', 'prize', 'contact_number', 'organizer', 'genre', 'quiz_master', 'registration_link', 'other_details']].reset_index(drop=True)
 
-# Make the 'registration_link' column clickable
+
 df_reset['registration_link'] = df_reset['registration_link'].apply(lambda x: f'<a href="{x}" target="_blank">{x}</a>' if pd.notna(x) else '')
-# Rename columns to something more user-friendly
+
 df_reset = df_reset.rename(columns={
     'quiz_name': 'Quiz Name',
     'date': 'Date',
@@ -49,8 +49,45 @@ df_reset = df_reset.rename(columns={
     'registration_link': 'Registration Link',
     'other_details': 'Other Details'
 })
-# Display the table with clickable links
-st.markdown(df_reset.to_html(escape=False), unsafe_allow_html=True)
+
+fest_contacts = df_reset['Contact Number'].value_counts()
+fest_contacts = fest_contacts[fest_contacts > 1].index.tolist()
+
+highlight_palette = [
+    '#f9f6e9',  # soft yellow
+    '#e9f6f9',  # soft blue
+    '#f6e9f9',  # soft pink
+    '#e9f9f0',  # soft green
+    '#fff4e6',  # warm peach
+    '#fef9e7',  # lemon tint
+    '#f4f4f4',  # light grey
+]
+
+fest_color_map = {
+    contact: highlight_palette[i % len(highlight_palette)]
+    for i, contact in enumerate(fest_contacts)
+}
+
+df_reset['highlight_color'] = df_reset['Contact Number'].apply(lambda x: fest_color_map.get(x, ''))
+
+def styled_row(row):
+    style = f'background-color:{row["highlight_color"]};' if row['highlight_color'] else ''
+    row_html = f'<tr style="{style}">'
+    for col in df_reset.columns[:-1]:  # exclude 'highlight_color'
+        row_html += f'<td>{row[col]}</td>'
+    row_html += '</tr>'
+    return row_html
+
+table_headers = ''.join(f'<th>{col}</th>' for col in df_reset.columns[:-1])
+table_rows = '\n'.join(df_reset.apply(styled_row, axis=1))
+table_html = f'''
+<table>
+<thead><tr>{table_headers}</tr></thead>
+<tbody>{table_rows}</tbody>
+</table>
+'''
+
+st.markdown(table_html, unsafe_allow_html=True)
 
 st.subheader("Submit an Upcoming Quiz ")
 with st.form(key='event_form', clear_on_submit=True):
@@ -60,7 +97,7 @@ with st.form(key='event_form', clear_on_submit=True):
         Date = st.date_input("Date*")
         Time = st.text_input("Time*")
         Category = st.text_input("Category*")
-        Venue = st.text_input("Venue")  # Changed from place to venue
+        Venue = st.text_input("Venue")  
         Location = st.text_input("Location*")
         Organizer = st.text_input("Organizer")
         Genre = st.text_input("Genre")
