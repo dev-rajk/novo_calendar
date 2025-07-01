@@ -49,6 +49,7 @@ df_reset = df_reset.rename(columns={
     'registration_link': 'Registration Link',
     'other_details': 'Other Details'
 })
+df_reset.insert(0, 'Sl. No.', range(1, len(df_reset) + 1))
 
 fest_contacts = df_reset['Contact Number'].value_counts()
 fest_contacts = fest_contacts[fest_contacts > 1].index.tolist()
@@ -120,5 +121,5 @@ st.write('''
                 :red[**This website is free of cost for all users.** ] \n
                 :red[**Users are encouraged to verify all event information.**] \n
                 :red[**No personal infomation is tracked.**] \n
-                :green[**Cheers to quizzing.** ] :partying_face::partying_face:\n
+                :green[**Cheers to quizzing.** ] :partying_face: :partying_face:\n
                   ''')
